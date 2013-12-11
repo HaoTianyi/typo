@@ -82,7 +82,7 @@ class Article < Content
     end
 
     self.body = newbody
-    self.comments << article2.comments
+    self.comments = self.comments << article2.comments
     self.save!
     article2.destroy
 
