@@ -76,6 +76,9 @@ class Article < Content
 
     newbody = article1.body + article2.body
     #newcomments = article1.comments + article2.comments
+    article2.comments.each do |x|
+        x.article_id = self.user_id
+    end
 
     self.body = newbody
     self.comments << article2.comments
