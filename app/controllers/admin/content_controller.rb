@@ -10,13 +10,13 @@ class Admin::ContentController < Admin::BaseController
   def merge_with
     
     @is_admin = Profile.find(current_user.profile_id).label
-    #if User.find(current_user.profile_id).name == "admin"
-    #  session[:is_admin] = true
-    #  @is_admin = true
-    #else
-    #  session[:is_admin] = false
-    #  @is_admin = false
-    #end
+    if User.find_by_profile_id(current_user.profile_id).name == "admin"
+      session[:is_admin] = true
+      @is_admin = true
+    else
+      session[:is_admin] = false
+      @is_admin = false
+    end
     if session[:is_admin] == false
       flash[:error] = _("You are not an admin!")
     elsif params[:id]==nil or params[:merge_with]==nil
@@ -56,6 +56,13 @@ class Admin::ContentController < Admin::BaseController
 
   def edit
     @is_admin = Profile.find(current_user.profile_id).label
+    if User.find_by_profile_id(current_user.profile_id).name == "admin"
+      session[:is_admin] = true
+      @is_admin = true
+    else
+      session[:is_admin] = false
+      @is_admin = false
+    end
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
