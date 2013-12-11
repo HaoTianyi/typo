@@ -78,6 +78,7 @@ Scenario: Comments on each of the two original articles need to all carry over a
   Then I should be on the admin content page
   And I should see "You have successfully merged the articles."
   And I should see "Hello Art!"
+  And I should see " 2"
 
 Scenario: The title of the new article should be the title from either one of the merged articles
   When I go to the login page
