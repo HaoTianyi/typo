@@ -76,10 +76,9 @@ class Article < Content
 
     newbody = article1.body + article2.body
     #newcomments = article1.comments + article2.comments
-    Comment.All.each do |com|
-        if com[:article_id] == other_article_id
-            com[:article_id] = self.id
-        end
+    article2.comments.each do |com|
+        com.article_id = self.id
+        com.save!
     end
 
     self.body = newbody
