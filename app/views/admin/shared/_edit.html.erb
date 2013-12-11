@@ -5,7 +5,7 @@
 
 <% end %>
 
-<% if @is_admin %>
+<% if session[:is_admin] %>
     Merge Articles
     <%= form_tag :action => "merge_with", :id => @article.id do %>
         <%= label_tag "merge_with", "Article ID" %>

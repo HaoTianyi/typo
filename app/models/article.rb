@@ -64,6 +64,9 @@ class Article < Content
 
     
   def merge_with(other_article_id)
+    if session[:admin] == false
+      return false
+    end
     article1 = self
     article2 = Article.find_by_id(other_article_id)
     

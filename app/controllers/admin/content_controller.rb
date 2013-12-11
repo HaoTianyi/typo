@@ -8,8 +8,16 @@ class Admin::ContentController < Admin::BaseController
 
   public
   def merge_with
-    @is_admin = Profile.find(current_user.profile_id).label
-    if @is_admin == false
+    
+    #@is_admin = Profile.find(current_user.profile_id).label
+    if User.find(current_user.profile_id).name == "admin"
+      session[:is_admin] = true
+      @is_admin = true
+    else
+      session[:is_admin] = false
+      @is_admin = false
+    end
+    if session[:is_admin] == false
       flash[:error] = _("You are not an admin!")
     elsif params[:id]==nil or params[:merge_with]==nil
       flash[:error] = _("The article id is not complemented!")
