@@ -82,8 +82,9 @@ class Article < Content
     end
 
     self.body = newbody
-    self.comments = self.comments + article2.comments
+    self.comments = self.comments << article2.comments
     self.save!
+    article2 = Article.find_by_id(other_article_id)
     article2.destroy
 
     return true
