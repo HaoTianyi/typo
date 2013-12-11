@@ -23,7 +23,7 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("The article id is not complemented!")
     else
       mergeart = Article.find_by_id(params[:id])
-      merged = mergeart.merge_with(params[:article_id])
+      merged = mergeart.merge_with(params[:merge_with])
       if merged
         flash[:notice] = _("You have successfully merged the articles.")
       else
