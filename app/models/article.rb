@@ -64,7 +64,7 @@ class Article < Content
 
     
   def merge_with(other_article_id)
-    if session[:admin] == false
+    if @is_admin == false
       return false
     end
     article1 = self
