@@ -6,6 +6,25 @@ class Admin::ContentController < Admin::BaseController
 
   cache_sweeper :blog_sweeper
 
+  public
+  def merge_with
+    @is_admin = Profile.find(current_user.profile_id).label
+    if @is_admin == false
+      flash[:error] = _("You are not an admin!")
+    elsif params[:id]==nil or params[:merge_with]==nil
+      flash[:error] = _("The article id is not complemented!")
+    else
+      mergeart = Article.find_by_id(params[:id])
+      merged = mergeart.merge_with(params[:merge_with])
+      if merged
+        flash[:notice] = _("You have successfully merged the articles.")
+      else
+        flash[:error] = _("Can not be merged!")
+      end
+    end
+    redirect_to :action => :index
+  end
+
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
     render :inline => "<%= raw auto_complete_result @items, 'name' %>"
@@ -28,6 +47,7 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def edit
+    @is_admin = Profile.find(current_user.profile_id).label
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
@@ -240,4 +260,6 @@ class Admin::ContentController < Admin::BaseController
   def setup_resources
     @resources = Resource.by_created_at
   end
+
+
 end

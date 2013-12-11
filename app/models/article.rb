@@ -61,6 +61,27 @@ class Article < Content
 
   setting :password,                   :string, ''
 
+
+    
+  def merge_with(other_article_id)
+    article1 = self
+    article2 = Article.find_by_id(other_article_id)
+    
+    if article1 == nil or article2 == nil or article1 == article2
+      return false
+    end
+
+    newbody = article1.body + article2.body
+    #newcomments = article1.comments + article2.comments
+
+    self.body = newbody
+    self.comments << article2.comments
+    self.save!
+    article2.destroy
+
+    return true
+  end
+
   def initialize(*args)
     super
     # Yes, this is weird - PDC
@@ -466,4 +487,6 @@ class Article < Content
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
   end
+  
+
 end

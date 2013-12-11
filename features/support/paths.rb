@@ -18,6 +18,19 @@ module NavigationHelpers
     when /^the new article page$/
       '/admin/content/new'
 
+    when /^the login page$/
+      '/accounts/login'
+
+    when /^the edit page of article (.*) for "(.*)"$/
+      "/#{$2}/content/edit/#{$1}"
+
+    when /^the show page of article (.*) for "(.*)"$/
+      "/#{$2}/content/show/#{$1}"
+    
+    when /^the show page of hello art$/
+      "/2013/11/11/hello-art"
+
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
